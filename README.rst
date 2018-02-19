@@ -1,6 +1,6 @@
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-ING Belgium plugin for ofxstatement
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+John Lewis Partnership Card plugin for ofxstatement
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `ofxstatement`_ is a tool to convert proprietary bank statement to OFX format,
 suitable for importing to GnuCash. Plugin for ofxstatement parses a
@@ -17,4 +17,4 @@ your own plugin.
 Usage
 =====
 
-  $ ofxstatement convert -t ingbe input.csv output.ofx
+  $ ofxstatement convert -t jlpartnership input.csv output.ofx
