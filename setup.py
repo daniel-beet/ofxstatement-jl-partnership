@@ -9,15 +9,15 @@ version = "0.0.1"
 with open('README.rst') as f:
     long_description = f.read()
 
-setup(name='ofxstatement-be-ing',
+setup(name='ofxstatement-jl-partnership',
       version=version,
-      author="Theodore Marescaux",
-      author_email="theo.public@gmail.com",
-      url="https://github.com/TheoMarescaux/ofxstatement-be-ing",
-      description=("OFXStatement plugin for ING (Belgium)"),
+      author="Daniel Beet",
+      author_email="dan@ionicblue.com",
+      url="https://github.com/ionicblue/ofxstatement-jl-partnership",
+      description=("OFXStatement plugin for John Lewis Partnership card (UK)"),
       long_description=long_description,
-      license="GPLv3",
-      keywords=["ofx", "banking", "statement"],
+      license="MIT",
+      keywords=["ofx", "banking", "statement", "john lewis", "partnership"],
       classifiers=[
           'Development Status :: 3 - Alpha',
           'Programming Language :: Python :: 3',
@@ -32,7 +32,7 @@ setup(name='ofxstatement-be-ing',
       namespace_packages=["ofxstatement", "ofxstatement.plugins"],
       entry_points={
           'ofxstatement':
-          ['ingbe = ofxstatement.plugins.ingbe:IngBePlugin']
+          ['jlpartnership = ofxstatement.plugins.jlpartnership:JLPartnershipPlugin']
           },
       install_requires=['ofxstatement'],
       include_package_data=True,
