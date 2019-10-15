@@ -4,7 +4,7 @@
 from setuptools import find_packages
 from distutils.core import setup
 
-version = "0.0.1"
+version = "0.0.2"
 
 with open('README.rst') as f:
     long_description = f.read()
@@ -13,7 +13,7 @@ setup(name='ofxstatement-jl-partnership',
       version=version,
       author="Daniel Beet",
       author_email="dan@ionicblue.com",
-      url="https://github.com/ionicblue/ofxstatement-jl-partnership",
+      url="https://github.com/daniel-beet/ofxstatement-jl-partnership",
       description=("OFXStatement plugin for John Lewis Partnership card (UK)"),
       long_description=long_description,
       license="MIT",
@@ -26,7 +26,7 @@ setup(name='ofxstatement-jl-partnership',
           'Topic :: Utilities',
           'Environment :: Console',
           'Operating System :: OS Independent',
-          'License :: OSI Approved :: GNU Affero General Public License v3'],
+          'License :: OSI Approved :: MIT License'],
       packages=find_packages('src'),
       package_dir={'': 'src'},
       namespace_packages=["ofxstatement", "ofxstatement.plugins"],

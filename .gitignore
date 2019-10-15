@@ -6,7 +6,9 @@ src/*.egg-info
 tags
 build
 eggs
+__pycache__
 .venv
 .project
 .pydevproject
 *.sublime*
+.vscode/.ropeproject/objectdb
