@@ -18,3 +18,28 @@ Usage
 =====
 
   $ ofxstatement convert -t jlpartnership input.csv output.ofx
+
+Development / Test
+==================
+
+``ofxstatemnt`` uses `pipenv`_ to manage the development environment and
+dependencies::
+
+  $ pip install pipenv
+  $ pipenv sync --dev
+
+.. _pipenv: https://github.com/pypa/pipenv
+
+And finally run the test suite::
+
+  $ pipenv shell
+  $ pytest
+
+Or use make:
+  $ make
+
+Package tgz for pip install:
+  $ python setup.py sdist
+
+
+When satisfied, you may create a pull request.
