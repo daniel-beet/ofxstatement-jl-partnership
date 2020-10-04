@@ -26,6 +26,7 @@ Development / Test
 dependencies::
 
   $ pip install pipenv
+  $ pipenv shell
   $ pipenv sync --dev
 
 .. _pipenv: https://github.com/pypa/pipenv
@@ -38,8 +39,13 @@ And finally run the test suite::
 Or use make:
   $ make
 
-Package tgz for pip install:
-  $ python setup.py sdist
+Install the source using pip for local testing
+  $ pip install -e .
 
+Build packages
+  $ python setup.py sdist bdist_wheel
+
+Upload packages to PiPI (using API key saved to ~/.pypirc)
+  $ twine upload dist/*
 
 When satisfied, you may create a pull request.
