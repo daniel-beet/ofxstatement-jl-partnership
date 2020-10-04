@@ -5,7 +5,7 @@ from distutils.core import setup
 
 from setuptools import find_packages
 
-version = "0.0.3"
+version = "1.0.0"
 
 with open("README.rst") as f:
     long_description = f.read()
@@ -21,7 +21,7 @@ setup(
     license="MIT",
     keywords=["ofx", "banking", "statement", "john lewis", "partnership"],
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 5 - Production/Stable",
         "Programming Language :: Python :: 3",
         "Natural Language :: English",
         "Topic :: Office/Business :: Financial :: Accounting",
