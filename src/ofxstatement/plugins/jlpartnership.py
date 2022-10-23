@@ -11,7 +11,6 @@ from ofxstatement.parser import CsvStatementParser, StatementParser
 from ofxstatement.plugin import Plugin
 from ofxstatement.statement import Statement, StatementLine
 
-
 class JLPartnershipPlugin(Plugin):
     """John Lewis Partnership Credit Card Plugin"""
 
@@ -24,13 +23,13 @@ class JLPartnershipPlugin(Plugin):
             self.settings.get("account", ""),
         )
 
-
 class JLPartnershipParser(CsvStatementParser):
     statement_year = datetime.now().year
     date_pattern = re.compile(r"(?i)^(\d{2})-([A-Z]+)-(\d{4})$")
     url_domain_pattern = re.compile(r"(?:https?://)?(?:www\.)?(?:\w+\.)+\w{2,}")
     date_format = "%d-%b-%Y"  # example 22 Apr 2018
     mappings = {"date": 0, "payee": 1, "amount": 2, "memo": 1}
+    statement_format = ""
 
     def __init__(
         self, filename: str, encoding: str, currency: str, bank_id: str, account_id: str
@@ -66,7 +65,15 @@ class JLPartnershipParser(CsvStatementParser):
             header_line = self.fin.readline()
             header_reader = csv.reader([header_line])
             csv_headers = next(header_reader, None)
-            if not csv_headers == ["Date Processed", "Description", "Amount", ""]:
+            if csv_headers == ["Date", "Description", "Amount(GBP)"]:
+                self.statement_format = "newday"
+                self.date_format = "%d/%m/%Y"  # example 22/04/2018
+                self.date_pattern = re.compile(r"(?i)^(\d{2})/(\d{2})/(\d{4})$")
+            elif csv_headers == ["Date Processed", "Description", "Amount", ""]:
+                self.statement_format = "hsbc"
+                self.date_format = "%d-%b-%Y"  # example 22 Apr 2018
+                self.date_pattern = re.compile(r"(?i)^(\d{2})-([A-Z]+)-(\d{4})$")
+            else:
                 raise ParseError(3, "Invalid CSV file, missing expected headers")
             reader = csv.reader(self.fin)
             yield from reader
@@ -85,12 +92,12 @@ class JLPartnershipParser(CsvStatementParser):
         # append the statement year for the times only the day and month are in csv
         if self.date_pattern.match(line[0]) == None:
             line[0] += " " + str(self.statement_year)
-        # Convert case of description to something more pleasent for use as memo and payee
+        # Convert case of description to something more pleasant for use as memo and payee
         description = line[1].title()
         # Correct the amount
         line[2] = line[2].replace("£", "").replace(",", "").replace(" ", "")
-        if line[2][0] == "+":
-            line[2] = line[2][1:]  # skip leading "+"
+        if line[2][0] == "+" or line[2][0] == "-":
+            line[2] = line[2][1:]  # skip leading "+" or "-" so we swap the sign for NewDay
         else:
             line[2] = "-" + line[2]
 
@@ -109,7 +116,7 @@ class JLPartnershipParser(CsvStatementParser):
             # rest is the memo
             record.memo = self.collapse_whitespace(description[23:].strip())
         # Handle the direct debit credit payment
-        if line[1] == "DIRECT DEBIT TRANSACTION":
+        if line[1] == "DIRECT DEBIT TRANSACTION" or line[1] == "PAYMENT RECEIVED - THANK YOU":
             record.payee = self.statement.bank_id
             record.memo = description.strip().lower().capitalize()
 
@@ -130,7 +137,7 @@ class JLPartnershipParser(CsvStatementParser):
         ):
             record.memo = record.payee + " " + record.memo
             record.payee = "Amazon"
-        
+
         if (record.payee == record.memo):
             record.memo = ""
 
